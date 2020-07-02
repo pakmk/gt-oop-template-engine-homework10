@@ -2,10 +2,11 @@
 // Parent Class
 // 18-Ins-Classes
 class Employee {
-  constructor(name, id, email) {
+  constructor(name, id, email, employee) {
     this.name = name;
     this.id = id;
     this.email = email;
+    this.employee = `Employee`;
   }
   getName() {
     return this.name;
@@ -17,7 +18,7 @@ class Employee {
     return this.email;
   }
   getRole() {
-    return `Employee`;
+    return this.employee;
   }
 }
 
