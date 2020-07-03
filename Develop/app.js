@@ -92,7 +92,7 @@ const teamMember = [
   },
 ];
 
-employeeArray = [];
+const employeeArray = [];
 
 function init() {
   inquirer.prompt(mgrQuestions).then((response) => {
@@ -104,7 +104,7 @@ function init() {
       response.number
     );
     employeeArray.push(manager);
-    console.log("Success!")
+    // console.log("Success!");
     newEmployee();
   });
 }
@@ -115,7 +115,9 @@ function newEmployee() {
       newEngineer();
     } else if (response.teamMember === `Intern`) {
       newIntern();
-    } 
+    } else {
+      generatePage();
+    }
   });
 }
 
@@ -147,14 +149,20 @@ function newIntern() {
   });
 }
 
+function generatePage() {
+  fs.writeFile (outputPath, render(employeeArray), (err) => {
+    // throws an error, you could also catch it here
+    if (err) {
+      throw err;
+    } else {
+      console.log(`Success!`);
+    }
+  });
+}
+
 
 init();
 
-// homework09
-// if (err) {
-//   throw err;
-// } else {
-//   console.log(`Success!`);
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
