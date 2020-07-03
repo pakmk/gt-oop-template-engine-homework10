@@ -31,14 +31,130 @@ const mgrQuestions = [
     message: `What is your manager's office number?`,
     name: `number`,
   },
+];
+
+const engQuestions = [
   {
-    type: `list`,
-    message: `What type of team member would you like to add?`,
-    name: `team-member`,
-    choices: [`Engineer`, `Intern`, `I don't want to add any more team members`],
+    type: `input`,
+    message: `What is your engineer's name?`,
+    name: `name`,
+  },
+  {
+    type: `input`,
+    message: `What is your engineer's id?`,
+    name: `id`,
+  },
+  {
+    type: `input`,
+    message: `What is your engineer's email?`,
+    name: `email`,
+  },
+  {
+    type: `input`,
+    message: `What is your engineer's Github`,
+    name: `github`,
   },
 ];
 
+const internQuestions = [
+  {
+    type: `input`,
+    message: `What is your intern's name?`,
+    name: `name`,
+  },
+  {
+    type: `input`,
+    message: `What is your intern's id?`,
+    name: `id`,
+  },
+  {
+    type: `input`,
+    message: `What is your intern's email?`,
+    name: `email`,
+  },
+  {
+    type: `input`,
+    message: `What is your intern's school?`,
+    name: `school`,
+  },
+];
+
+const teamMember = [
+  {
+    type: `list`,
+    message: `What type of team member would you like to add?`,
+    name: `teamMember`,
+    choices: [
+      `Engineer`,
+      `Intern`,
+      `I don't want to add any more team members`,
+    ],
+  },
+];
+
+employeeArray = [];
+
+function init() {
+  inquirer.prompt(mgrQuestions).then((response) => {
+    // console.log(response)
+    const manager = new Manager(
+      response.name,
+      response.id,
+      response.email,
+      response.number
+    );
+    employeeArray.push(manager);
+    console.log("Success!")
+    newEmployee();
+  });
+}
+
+function newEmployee() {
+  inquirer.prompt(teamMember).then((response) => {
+    if (response.teamMember === `Engineer`) {
+      newEngineer();
+    } else if (response.teamMember === `Intern`) {
+      newIntern();
+    } 
+  });
+}
+
+function newEngineer() {
+  inquirer.prompt(engQuestions).then((response) => {
+    // console.log(response)
+    const engineer = new Engineer(
+      response.name,
+      response.id,
+      response.email,
+      response.github
+    );
+    employeeArray.push(engineer);
+    newEmployee();
+  });
+}
+
+function newIntern() {
+  inquirer.prompt(internQuestions).then((response) => {
+    // console.log(response)
+    const intern = new Intern(
+      response.name,
+      response.id,
+      response.email,
+      response.school
+    );
+    employeeArray.push(intern);
+    newEmployee();
+  });
+}
+
+
+init();
+
+// homework09
+// if (err) {
+//   throw err;
+// } else {
+//   console.log(`Success!`);
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
